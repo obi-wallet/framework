@@ -85,6 +85,12 @@ cd bindings
 wasm-pack build --target web --scope mpc-sdk --features tracing
 '''
 
+[tasks.bindings-node]
+script = '''
+cd bindings
+wasm-pack build --target nodejs --scope mpc-sdk
+'''
+
 [tasks.gen-server-key]
 script = '''
 cargo run -- generate-keypair server.pem
