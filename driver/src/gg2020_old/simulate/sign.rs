@@ -104,9 +104,9 @@ pub fn signing_offline_stage_simulated_impl(
 ) -> Result<Vec<SimulationSignerInternal>, crate::gg_2020::state_machine::sign::Error> {
     let mut simulation = Simulation::new();
     let participants: Vec<u16> = local_keys.iter().map(|lk| lk.i).collect();
-    for local_key in local_keys.iter().into_iter() {
+    for (i, local_key) in local_keys.into_iter().enumerate() {
         let offline_stage = OfflineStage::new(
-            local_key.i,
+            (i + 1) as u16,
             participants.clone(),
             local_key.clone(),
         )?;
