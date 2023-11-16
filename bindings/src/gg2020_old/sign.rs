@@ -43,6 +43,7 @@ impl Signer {
     }
 
     /// Returns the completed offline stage if available.
+    #[wasm_bindgen(js_name = "completedOfflineStage")]
     pub fn completed_offline_stage(&mut self) -> Result<JsValue, JsError> {
         Ok(serde_wasm_bindgen::to_value(&self.0.completed_offline_stage()?)?)
     }
