@@ -40,11 +40,11 @@ impl KeygenWrapper {
     }
 
     /// Proceed to the next round.
-    pub fn proceed(&mut self) -> Result<Vec<RoundMsg<ProtocolMessage>>, Error> {
+    pub fn proceed(&mut self) -> Result<(u16, Vec<RoundMsg<ProtocolMessage>>), Error> {
         self.0.proceed()?;
         let messages = self.0.message_queue().drain(..).collect();
         let round = self.0.current_round();
-        Ok(RoundMsg::from_round(round, messages))
+        Ok((round, RoundMsg::from_round(round, messages)))
     }
 
     /// Create the key share.

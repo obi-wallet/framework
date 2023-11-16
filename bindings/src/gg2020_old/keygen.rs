@@ -36,8 +36,7 @@ mod bindings {
 
         /// Proceed to the next round.
         pub fn proceed(&mut self) -> Result<JsValue, JsError> {
-            let p = self.0.proceed()?;
-            Ok(serde_wasm_bindgen::to_value(&p)?)
+            Ok(serde_wasm_bindgen::to_value(&self.0.proceed()?)?)
         }
 
         /// Create the key share.
