@@ -1,9 +1,9 @@
 //! Key generation simulated
 
 use cggmp_threshold_ecdsa::mpc_ecdsa::gg_2020::state_machine::sign::Error;
-use round_based::dev::Simulation;
 
 use mpc_protocol::Parameters;
+use crate::gg2020_old::simulate::simulation::Simulation;
 
 use crate::gg20::KeyShare;
 use crate::gg_2020::state_machine::keygen::Keygen;

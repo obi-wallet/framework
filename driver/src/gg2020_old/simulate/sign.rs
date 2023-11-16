@@ -2,10 +2,10 @@
 
 use cggmp_threshold_ecdsa::mpc_ecdsa::gg_2020::state_machine::sign::CompletedOfflineStage;
 use curv::{arithmetic::Converter, elliptic::curves::Secp256k1, BigInt};
-use round_based::dev::Simulation;
 
 use crate::Error;
 use crate::gg2020_old::sign::SignerError;
+use crate::gg2020_old::simulate::simulation::Simulation;
 use crate::gg2020_old::utils;
 use crate::gg20::Signature;
 use crate::gg_2020::party_i::verify;
