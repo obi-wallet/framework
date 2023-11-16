@@ -21,7 +21,7 @@ pub(crate) trait Round:
 /// Used to ensure round messages are grouped together and
 /// out of order messages can thus be handled correctly.
 #[derive(Debug, Serialize, Deserialize)]
-pub(crate) struct RoundMsg<O>
+pub struct RoundMsg<O>
 where
     O: Send + Sync,
 {
