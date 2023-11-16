@@ -78,7 +78,7 @@ impl SignerInternal {
 
     /// Returns the completed offline stage if available.
     pub fn completed_offline_stage(&mut self) -> Result<CompletedOfflineStage, Error> {
-        self.inner.pick_output().unwrap()
+        Ok(CompletedOfflineStage::Full(self.inner.pick_output().unwrap()?))
     }
 
     /// Generate the completed offline stage and store the result
@@ -88,7 +88,7 @@ impl SignerInternal {
     /// signing participants.
     pub fn partial(&mut self, message: Vec<u8>) -> Result<PartialSignature, SignerError> {
         let message: [u8; 32] = message.as_slice().try_into()?;
-        let completed_offline_stage = self.inner.pick_output().unwrap()?;
+        let completed_offline_stage = CompletedOfflineStage::Full(self.inner.pick_output().unwrap()?);
         let data = BigInt::from_bytes(&message);
         let (_sign, partial) =
             SignManual::new(data.clone(), completed_offline_stage.clone())?;
@@ -118,7 +118,10 @@ impl SignerInternal {
             .completed
             .take()
             .ok_or_else(|| SignerError::ErrCompletedOfflineStage)?;
-        let pk = completed_offline_stage.public_key().clone();
+        let pk = match &completed_offline_stage {
+            CompletedOfflineStage::Full(f) => f.local_key.y_sum_s.clone(),
+            CompletedOfflineStage::Minimal(m) => m.pubkey.clone(),
+        };
 
         let (sign, _partial) =
             SignManual::new(data.clone(), completed_offline_stage.clone())?;

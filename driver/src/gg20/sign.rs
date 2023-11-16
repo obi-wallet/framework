@@ -317,7 +317,7 @@ impl ProtocolDriver for SignOfflineDriver {
     }
 
     fn finish(mut self) -> Result<Self::Output> {
-        Ok(self.inner.pick_output().unwrap()?)
+        Ok(CompletedOfflineStage::Full(self.inner.pick_output().unwrap()?))
     }
 }
 
@@ -339,7 +339,10 @@ impl SignOnlineDriver {
         message: [u8; 32],
     ) -> Result<Self> {
         let data = BigInt::from_bytes(&message);
-        let public_key = completed_offline_stage.public_key().clone();
+        let public_key = match &completed_offline_stage {
+            CompletedOfflineStage::Full(f) => f.local_key.y_sum_s.clone(),
+            CompletedOfflineStage::Minimal(m) => m.pubkey.clone(),
+        };
         let (sign, partial) =
             SignManual::new(data.clone(), completed_offline_stage)?;
         Ok(Self {

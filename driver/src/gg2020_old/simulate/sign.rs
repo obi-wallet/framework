@@ -74,7 +74,10 @@ impl SimulationSignerInternal {
             .completed
             .take()
             .ok_or_else(|| SignerError::ErrCompletedOfflineStage)?;
-        let pk = completed_offline_stage.public_key().clone();
+        let pk = match &completed_offline_stage {
+            CompletedOfflineStage::Full(f) => f.local_key.y_sum_s.clone(),
+            CompletedOfflineStage::Minimal(m) => m.pubkey.clone(),
+        };
 
         let (sign, _partial) =
             SignManual::new(data.clone(), completed_offline_stage.clone())?;
@@ -112,7 +115,7 @@ pub fn signing_offline_stage_simulated_impl(
 
     simulation.run()
         .map(|stages| {
-            stages.into_iter().map(SimulationSignerInternal::new).collect()
+            stages.into_iter().map(|c| SimulationSignerInternal::new(CompletedOfflineStage::Full(c))).collect()
         })
 }
 
