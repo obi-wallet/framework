@@ -28,6 +28,8 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 #[cfg(feature = "gg20")]
 pub mod gg20;
+pub mod cggmp_old;
+pub mod gg2020_old;
 
 #[cfg(feature = "gg20")]
 #[doc(hidden)]

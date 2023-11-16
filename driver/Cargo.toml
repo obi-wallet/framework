@@ -39,7 +39,8 @@ package = "kzen-paillier"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies.cggmp-threshold-ecdsa]
 optional = true
-git = "https://github.com/webb-tools/cggmp-threshold-ecdsa"
+git = "https://github.com/luca992/cggmp-threshold-ecdsa"
+branch = "obi"
 version = "0.1"
 
 # WASM
@@ -64,8 +65,9 @@ default-features = false
 
 [target.'cfg(target_arch = "wasm32")'.dependencies.cggmp-threshold-ecdsa]
 optional = true
-git = "https://github.com/webb-tools/cggmp-threshold-ecdsa"
+git = "https://github.com/luca992/cggmp-threshold-ecdsa"
 default-features = false
+branch = "obi"
 version = "0.1"
 
 [build-dependencies]
