@@ -11,7 +11,7 @@ pub fn keygen_simulated(parameters: JsValue) -> Result<JsValue, JsError> {
         .build()
         .unwrap();
     let keyshares = rt.block_on(async {
-        keygen_simulated_impl(serde_wasm_bindgen::from_value(parameters)?).await?
+        keygen_simulated_impl(serde_wasm_bindgen::from_value(parameters).unwrap()).await.unwrap()
     });
     Ok(serde_wasm_bindgen::to_value(&keyshares)?)
 }
