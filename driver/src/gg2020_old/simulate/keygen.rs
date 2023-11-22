@@ -9,7 +9,9 @@ use crate::gg20::KeyShare;
 use crate::gg_2020::state_machine::keygen::Keygen;
 
 /// Generate keys in simulation mode
-pub async fn keygen_simulated_impl(parameters: Parameters) -> Result<Vec<KeyShare>, Error> {
+pub async fn keygen_simulated_impl(
+    parameters: Parameters,
+) -> Result<Vec<KeyShare>, Error> {
     let t = parameters.threshold;
     let n = parameters.parties;
     let mut simulation = AsyncSimulation::<Keygen>::new();
@@ -18,7 +20,12 @@ pub async fn keygen_simulated_impl(parameters: Parameters) -> Result<Vec<KeyShar
         simulation.add_party(Keygen::new(i, t, n).unwrap());
     }
 
-    let keys: Vec<KeyShare> = simulation.run().await.into_iter().map(|k| k.unwrap()).collect();
+    let keys: Vec<KeyShare> = simulation
+        .run()
+        .await
+        .into_iter()
+        .map(|k| k.unwrap())
+        .collect();
 
     Ok(keys.into_iter().map(|k| k.into()).collect())
 }
