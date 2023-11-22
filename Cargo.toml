@@ -63,3 +63,6 @@ wasm-bindgen-futures = "0.4"
 
 [patch.crates-io]
 tokio = { git = "https://github.com/luca992/tokio", branch = "web-time" }
+
+[patch.'https://github.com/webb-tools/round-based-protocol.git']
+round-based = { git = "https://github.com/luca992/round-based-protocol", branch = "proceed-async" }
