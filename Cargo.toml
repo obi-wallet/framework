@@ -60,3 +60,6 @@ wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
 wasm-log = "0.3"
 getrandom = {version = "0.2", features = ["js"]}
 wasm-bindgen-futures = "0.4"
+
+[patch.crates-io]
+tokio = { git = "https://github.com/luca992/tokio", branch = "web-time" }
