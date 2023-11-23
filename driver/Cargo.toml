@@ -40,7 +40,7 @@ package = "kzen-paillier"
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies.cggmp-threshold-ecdsa]
 optional = true
 git = "https://github.com/luca992/cggmp-threshold-ecdsa"
-branch = "obi"
+branch = "obi-unsecure"
 version = "0.1"
 
 # WASM
@@ -67,7 +67,7 @@ default-features = false
 optional = true
 git = "https://github.com/luca992/cggmp-threshold-ecdsa"
 default-features = false
-branch = "obi"
+branch = "obi-unsecure"
 version = "0.1"
 
 [build-dependencies]
