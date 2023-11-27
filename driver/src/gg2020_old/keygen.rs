@@ -5,15 +5,13 @@ use round_based::{Msg, StateMachine};
 
 use mpc_protocol::Parameters;
 
-use crate::gg2020_old::utils::PartySignup;
 use crate::gg20::KeyShare;
+use crate::gg2020_old::utils::PartySignup;
 use crate::gg_2020::state_machine::keygen::{Error, ProtocolMessage};
 use crate::round::RoundMsg;
 
-
 /// A wrapper around Keygen for use by wasm bindings
 pub struct KeygenWrapper(Keygen);
-
 
 impl KeygenWrapper {
     /// Create a key generator.
@@ -30,7 +28,6 @@ impl KeygenWrapper {
         )?))
     }
 
-
     /// Handle an incoming message.
     pub fn handle_incoming(
         &mut self,
@@ -40,7 +37,9 @@ impl KeygenWrapper {
     }
 
     /// Proceed to the next round.
-    pub fn proceed(&mut self) -> Result<(u16, Vec<RoundMsg<ProtocolMessage>>), Error> {
+    pub fn proceed(
+        &mut self,
+    ) -> Result<(u16, Vec<RoundMsg<ProtocolMessage>>), Error> {
         self.0.proceed()?;
         let messages = self.0.message_queue().drain(..).collect();
         let round = self.0.current_round();
@@ -53,4 +52,3 @@ impl KeygenWrapper {
         Ok(local_key.into())
     }
 }
-

@@ -20,4 +20,3 @@ pub(crate) fn address(public_key: &Vec<u8>) -> String {
     let final_bytes = &digest[12..];
     format!("0x{}", hex::encode(&final_bytes))
 }
-

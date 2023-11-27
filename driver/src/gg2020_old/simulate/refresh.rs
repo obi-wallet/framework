@@ -7,10 +7,9 @@ use serde::Deserialize;
 
 use mpc_protocol::Parameters;
 
-use crate::gg2020_old::simulate::simulation::Simulation;
 use crate::gg20::KeyShare;
+use crate::gg2020_old::simulate::simulation::Simulation;
 use crate::gg_2020::state_machine::keygen::LocalKey;
-
 
 /// KeyRefreshItem
 #[derive(Deserialize)]
@@ -33,7 +32,10 @@ pub enum KeyRefreshItem {
 pub fn key_refresh_simulated_impl(
     parameters: Parameters,
     key_refresh_items: Vec<KeyRefreshItem>,
-) -> Result<Vec<KeyShare>, cggmp_threshold_ecdsa::refresh::state_machine::Error> {
+) -> Result<
+    Vec<KeyShare>,
+    cggmp_threshold_ecdsa::refresh::state_machine::Error,
+> {
     let new_t = parameters.threshold;
     let new_n = parameters.parties;
 
@@ -46,7 +48,8 @@ pub fn key_refresh_simulated_impl(
                 key,
                 updated_party_index,
             } => {
-                let new_party_index = updated_party_index.unwrap_or(key.i);
+                let new_party_index =
+                    updated_party_index.unwrap_or(key.i);
                 old_to_new.insert(key.i, new_party_index);
                 old_t = key.t;
             }
@@ -56,28 +59,24 @@ pub fn key_refresh_simulated_impl(
     for item in key_refresh_items {
         match item {
             KeyRefreshItem::Existing { key, .. } => {
-                simulation.add_party(
-                    KeyRefresh::new(
-                        Some(key),
-                        None,
-                        &old_to_new,
-                        new_t,
-                        new_n,
-                        None,
-                    )?,
-                );
+                simulation.add_party(KeyRefresh::new(
+                    Some(key),
+                    None,
+                    &old_to_new,
+                    new_t,
+                    new_n,
+                    None,
+                )?);
             }
             KeyRefreshItem::New { party_index } => {
-                simulation.add_party(
-                    KeyRefresh::new(
-                        None,
-                        Some(party_index),
-                        &old_to_new,
-                        new_t,
-                        new_n,
-                        Some(old_t),
-                    )?,
-                );
+                simulation.add_party(KeyRefresh::new(
+                    None,
+                    Some(party_index),
+                    &old_to_new,
+                    new_t,
+                    new_n,
+                    Some(old_t),
+                )?);
             }
         }
     }
