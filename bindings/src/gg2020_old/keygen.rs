@@ -1,8 +1,8 @@
 //! Webassembly bindings for the gg2020 key generator.
 #[cfg(all(target_arch = "wasm32", target_os = "unknown"))]
 mod bindings {
-    use wasm_bindgen::{JsError, JsValue};
     use wasm_bindgen::prelude::wasm_bindgen;
+    use wasm_bindgen::{JsError, JsValue};
 
     use mpc_driver::gg2020_old::keygen::KeygenWrapper;
 
@@ -30,7 +30,9 @@ mod bindings {
             &mut self,
             message: JsValue,
         ) -> Result<(), JsError> {
-            self.0.handle_incoming(serde_wasm_bindgen::from_value(message)?)?;
+            self.0.handle_incoming(
+                serde_wasm_bindgen::from_value(message)?,
+            )?;
             Ok(())
         }
 

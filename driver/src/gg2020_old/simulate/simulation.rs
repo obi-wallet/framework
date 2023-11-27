@@ -60,7 +60,10 @@ where
     /// ## Panics
     /// * Number of parties is less than 2
     pub fn run(&mut self) -> Result<Vec<P::Output>, P::Err> {
-        assert!(self.parties.len() >= 2, "at least two parties required");
+        assert!(
+            self.parties.len() >= 2,
+            "at least two parties required"
+        );
 
         let mut parties: Vec<_> = self
             .parties
@@ -170,7 +173,10 @@ where
                 Ok(()) => (),
                 Err(err) if err.is_critical() => return Err(err),
                 Err(err) => {
-                    println!("Non-critical error encountered: {:?}", err);
+                    println!(
+                        "Non-critical error encountered: {:?}",
+                        err
+                    );
                 }
             }
             println!("  - after : {:?}", self.state);
@@ -189,21 +195,20 @@ where
     P::Err: Debug,
     P::MessageBody: Debug + Clone,
 {
-    let someone_is_finished = parties.iter().any(|p| p.state.is_finished());
+    let someone_is_finished =
+        parties.iter().any(|p| p.state.is_finished());
     if !someone_is_finished {
         return Ok(None);
     }
 
-    let everyone_are_finished = parties.iter().all(|p| p.state.is_finished());
+    let everyone_are_finished =
+        parties.iter().all(|p| p.state.is_finished());
     if everyone_are_finished {
         let mut results = vec![];
         for party in parties {
-            results.push(
-                party
-                    .state
-                    .pick_output()
-                    .expect("is_finished == true, but pick_output == None")?,
-            )
+            results.push(party.state.pick_output().expect(
+                "is_finished == true, but pick_output == None",
+            )?)
         }
 
         println!("Simulation is finished");

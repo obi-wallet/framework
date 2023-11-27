@@ -1,8 +1,8 @@
 //! Key refresh bindings: simulated mode
 #[cfg(all(target_arch = "wasm32", target_os = "unknown"))]
 mod bindings {
-    use wasm_bindgen::{JsError, JsValue};
     use wasm_bindgen::prelude::wasm_bindgen;
+    use wasm_bindgen::{JsError, JsValue};
 
     use mpc_driver::gg2020_old::simulate::refresh::key_refresh_simulated_impl;
 
