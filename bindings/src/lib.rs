@@ -1,6 +1,7 @@
 //! Webassembly bindings for the web platform.
 #![deny(missing_docs)]
 
+pub mod cggmp_old;
 pub mod gg2020_old;
 
 #[cfg(all(target_arch = "wasm32", target_os = "unknown"))]
@@ -77,7 +78,7 @@ mod bindings {
                 signing_key,
                 message,
             )
-                .await?;
+            .await?;
             Ok(serde_wasm_bindgen::to_value(&signature)?)
         };
         Ok(future_to_promise(fut).into())
@@ -152,7 +153,7 @@ mod bindings {
                 initiator,
                 data,
             )
-                .await?;
+            .await?;
             Ok(serde_wasm_bindgen::to_value(&meeting_id)?)
         };
         Ok(future_to_promise(fut).into())
