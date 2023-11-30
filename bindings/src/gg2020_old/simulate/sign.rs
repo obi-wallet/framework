@@ -70,11 +70,9 @@ mod bindings {
             &mut self,
             partials: JsValue,
         ) -> Result<JsValue, JsError> {
-            Ok(serde_wasm_bindgen::to_value(
-                &self
-                    .0
-                    .add(serde_wasm_bindgen::from_value(partials)?)?,
-            )?)
+            Ok(serde_wasm_bindgen::to_value(&self.0.create(
+                serde_wasm_bindgen::from_value(partials)?,
+            )?)?)
         }
     }
 
